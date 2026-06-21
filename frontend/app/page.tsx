@@ -8,7 +8,7 @@ export default function Home() {
       <div className="flex w-full max-w-md items-center justify-between pb-8">
         <div>
           <h1 className="text-xl font-bold text-white">OPN Mini Swap</h1>
-          <p className="text-xs text-white/40">Demonstracao de DEX na OPN Chain Testnet</p>
+          <p className="text-xs text-white/40">DEX demo on the OPN Chain Testnet</p>
         </div>
         <ConnectWallet />
       </div>
@@ -32,8 +32,8 @@ function FaucetLink() {
   };
   return (
     <footer className="mt-10 max-w-md text-center text-[11px] text-white/30">
-      Projeto de demonstracao / testnet. Tokens sem valor real. Rede OPN Testnet (chainId 984).{" "}
-      <a {...linkProps}>Pegar OPN de teste no faucet</a>
+      Demo / testnet project. Tokens have no real value. OPN Testnet (chainId 984).{" "}
+      <a {...linkProps}>Get test OPN from the faucet</a>
     </footer>
   );
 }

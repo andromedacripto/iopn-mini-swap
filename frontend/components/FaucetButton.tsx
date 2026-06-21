@@ -25,8 +25,8 @@ export function FaucetButton() {
 
   const { claim, isPending, isConfirming, isSuccess, error, hash } = useFaucetClaim();
 
-  // após claim confirmado, atualiza cooldown e saldo do faucet
-  // (mesmo padrão de useRef do SwapCard, evita refetch duplicado)
+  // after the claim is confirmed, refresh cooldown and faucet balance
+  // (same useRef pattern as SwapCard, avoids duplicate refetch)
   const lastRefetchedHash = useRef<string | undefined>(undefined);
   useEffect(() => {
     if (isSuccess && hash && lastRefetchedHash.current !== hash) {
@@ -45,32 +45,32 @@ export function FaucetButton() {
     !isConnected || !isCorrectNetwork || onCooldown || isFaucetEmpty || isPending || isConfirming;
 
   function label() {
-    if (!isConnected) return "Conecte a carteira";
-    if (!isCorrectNetwork) return "Troque para OPN Testnet";
-    if (isPending) return "Confirme na carteira...";
-    if (isConfirming) return "Recebendo TKA...";
-    if (isFaucetEmpty) return "Faucet vazio no momento";
-    if (onCooldown) return `Disponível em ${formatCooldown(cooldownSeconds)}`;
+    if (!isConnected) return "Connect wallet";
+    if (!isCorrectNetwork) return "Switch to OPN Testnet";
+    if (isPending) return "Confirm in wallet...";
+    if (isConfirming) return "Receiving TKA...";
+    if (isFaucetEmpty) return "Faucet is empty right now";
+    if (onCooldown) return `Available in ${formatCooldown(cooldownSeconds)}`;
     return claimAmount !== undefined
-      ? `Receber ${formatTokenAmount(claimAmount, TKA.decimals)} TKA`
-      : "Receber TKA";
+      ? `Claim ${formatTokenAmount(claimAmount, TKA.decimals)} TKA`
+      : "Claim TKA";
   }
 
-  // traduz reverts on-chain crus em mensagens legíveis, sem vazar
-  // stack trace bruto pro usuário (mesma diretriz seguida no SwapCard)
+  // translates raw on-chain reverts into readable messages, without
+  // leaking the raw stack trace to the user (same guideline followed in SwapCard)
   function friendlyError(message: string): string {
-    if (message.includes("COOLDOWN_ACTIVE")) return "Você já recebeu TKA nas últimas 24h.";
-    if (message.includes("EMPTY")) return "O faucet está sem saldo no momento.";
-    return "Não foi possível completar o claim. Tente novamente.";
+    if (message.includes("COOLDOWN_ACTIVE")) return "You already claimed TKA in the last 24h.";
+    if (message.includes("EMPTY")) return "The faucet is out of funds right now.";
+    return "Could not complete the claim. Please try again.";
   }
 
   return (
     <div className="w-full max-w-md rounded-2xl border border-white/10 bg-zinc-900/60 p-4 shadow-xl backdrop-blur">
       <div className="mb-2 flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-white/80">Faucet de teste</h3>
+        <h3 className="text-sm font-semibold text-white/80">Test faucet</h3>
         {faucetBalance !== undefined && (
           <span className="text-[11px] text-white/40">
-            Reserva: {formatTokenAmount(faucetBalance, TKA.decimals)} TKA
+            Reserve: {formatTokenAmount(faucetBalance, TKA.decimals)} TKA
           </span>
         )}
       </div>
@@ -86,7 +86,7 @@ export function FaucetButton() {
       {error && <p className="mt-2 text-xs text-red-400">{friendlyError(error.message)}</p>}
 
       {isSuccess && hash && (
-        <p className="mt-2 break-all text-xs text-emerald-400">TKA recebido! Hash: {hash}</p>
+        <p className="mt-2 break-all text-xs text-emerald-400">TKA received! Hash: {hash}</p>
       )}
     </div>
   );

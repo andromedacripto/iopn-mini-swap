@@ -3,8 +3,8 @@ import "./globals.css";
 import { Providers } from "@/components/Providers";
 
 export const metadata: Metadata = {
-  title: "OPN Mini Swap",
-  description: "Mini swap de demonstração para a OPN Chain (IOPn) Testnet",
+  title: "OPNX Swap",
+  description: "Swap for the OPN Chain (IOPn) Testnet",
 };
 
 export default function RootLayout({
@@ -13,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className="h-full antialiased">
+    <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col bg-zinc-950 font-sans">
         <Providers>{children}</Providers>
       </body>

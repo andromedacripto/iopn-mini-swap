@@ -117,16 +117,16 @@ export function SwapCard() {
     hash: swapHash,
   } = useSwapExecute();
 
-  // após aprovação confirmada, atualiza o allowance exibido
+  // after approval is confirmed, refresh the displayed allowance
   useEffect(() => {
     if (isApproveSuccess) {
       refetchAllowance();
     }
   }, [isApproveSuccess, refetchAllowance]);
 
-  // após swap confirmado, atualiza saldos (efeito de sincronização com a
-  // blockchain). O texto de status e a limpeza do campo são derivados
-  // diretamente do estado da transação no render, sem setState aqui.
+  // after the swap is confirmed, refresh balances (sync effect with the
+  // blockchain). Status text and clearing the field are derived
+  // directly from transaction state on render, no setState here.
   const lastRefetchedHash = useRef<string | undefined>(undefined);
   useEffect(() => {
     if (isSwapSuccess && swapHash && lastRefetchedHash.current !== swapHash) {
@@ -143,7 +143,7 @@ export function SwapCard() {
       return;
     }
     const parsed = safeParseAmount(raw, tokenIn.decimals);
-    setInputError(parsed === null ? "Valor inválido. Use apenas números positivos." : null);
+    setInputError(parsed === null ? "Invalid amount. Use positive numbers only." : null);
   }
 
   function handleSwapDirection() {
@@ -154,10 +154,10 @@ export function SwapCard() {
 
   function handleApprove() {
     if (!amountIn) return;
-    // aprova um valor generoso (2x o input) para reduzir a necessidade
-    // de aprovações repetidas em testes consecutivos, mas NUNCA infinito
-    // por padrão — aprovação infinita é uma escolha explícita do usuário
-    // em carteiras como MetaMask, não algo que decidimos por ele aqui.
+    // approves a generous amount (2x the input) to reduce the need
+    // for repeated approvals across consecutive tests, but NEVER infinite
+    // by default — infinite approval is an explicit choice the user
+    // makes in wallets like MetaMask, not something we decide for them here.
     approve(tokenIn.address, amountIn * 2n);
   }
 
@@ -187,12 +187,12 @@ export function SwapCard() {
         <SlippageControl slippagePercent={slippagePercent} onChange={setSlippage} />
       </div>
 
-      {/* Campo de entrada */}
+      {/* Input field */}
       <div className="rounded-xl border border-white/10 bg-black/30 p-3">
         <div className="mb-1 flex items-center justify-between text-xs text-white/50">
-          <span>Você paga</span>
+          <span>You pay</span>
           <span>
-            Saldo: {formatTokenAmount(balanceIn, tokenIn.decimals)} {tokenIn.symbol}
+            Balance: {formatTokenAmount(balanceIn, tokenIn.decimals)} {tokenIn.symbol}
           </span>
         </div>
         <div className="flex items-center gap-2">
@@ -207,27 +207,27 @@ export function SwapCard() {
         </div>
         {inputError && <p className="mt-1 text-xs text-red-400">{inputError}</p>}
         {hasInsufficientBalance && !inputError && (
-          <p className="mt-1 text-xs text-red-400">Saldo insuficiente de {tokenIn.symbol}.</p>
+          <p className="mt-1 text-xs text-red-400">Insufficient {tokenIn.symbol} balance.</p>
         )}
       </div>
 
-      {/* Botão de inverter direção */}
+      {/* Swap direction toggle button */}
       <div className="my-2 flex justify-center">
         <button
           onClick={handleSwapDirection}
-          aria-label="Inverter direção do swap"
+          aria-label="Reverse swap direction"
           className="rounded-full border border-white/10 bg-zinc-800 p-2 text-white/70 transition hover:rotate-180 hover:text-white"
         >
           ↓
         </button>
       </div>
 
-      {/* Campo de saída (somente leitura) */}
+      {/* Output field (read-only) */}
       <div className="rounded-xl border border-white/10 bg-black/30 p-3">
         <div className="mb-1 flex items-center justify-between text-xs text-white/50">
-          <span>Você recebe (estimado)</span>
+          <span>You receive (estimated)</span>
           <span>
-            Saldo: {formatTokenAmount(balanceOut, tokenOut.decimals)} {tokenOut.symbol}
+            Balance: {formatTokenAmount(balanceOut, tokenOut.decimals)} {tokenOut.symbol}
           </span>
         </div>
         <div className="flex items-center gap-2">
@@ -240,24 +240,24 @@ export function SwapCard() {
 
       {amountOutMin !== undefined && (
         <p className="mt-2 text-xs text-white/40">
-          Mínimo a receber com {slippagePercent}% de slippage:{" "}
+          Minimum received with {slippagePercent}% slippage:{" "}
           <span className="text-white/70">
             {formatTokenAmount(amountOutMin, tokenOut.decimals)} {tokenOut.symbol}
           </span>
         </p>
       )}
 
-      {/* Ações */}
+      {/* Actions */}
       <div className="mt-4 flex flex-col gap-2">
         {!isConnected && (
           <p className="rounded-xl bg-white/5 px-3 py-3 text-center text-sm text-white/60">
-            Conecte sua carteira para trocar tokens.
+            Connect your wallet to swap tokens.
           </p>
         )}
 
         {isConnected && !isCorrectNetwork && (
           <p className="rounded-xl bg-amber-500/10 px-3 py-3 text-center text-sm text-amber-300">
-            Troque para a rede OPN Testnet (chainId 984) para continuar.
+            Switch to the OPN Testnet (chainId 984) to continue.
           </p>
         )}
 
@@ -270,10 +270,10 @@ export function SwapCard() {
                 className="rounded-xl bg-blue-500 px-4 py-3 text-sm font-semibold text-white transition hover:bg-blue-400 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {isApprovePending
-                  ? "Confirme na carteira..."
+                  ? "Confirm in wallet..."
                   : isApproveConfirming
-                  ? "Aprovando..."
-                  : `Aprovar ${tokenIn.symbol}`}
+                  ? "Approving..."
+                  : `Approve ${tokenIn.symbol}`}
               </button>
             )}
 
@@ -283,22 +283,22 @@ export function SwapCard() {
               className="rounded-xl bg-emerald-500 px-4 py-3 text-sm font-semibold text-black transition hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isSwapPending
-                ? "Confirme na carteira..."
+                ? "Confirm in wallet..."
                 : isSwapConfirming
-                ? "Processando swap..."
+                ? "Processing swap..."
                 : !amountIn
-                ? "Informe um valor"
+                ? "Enter an amount"
                 : needsApproval
-                ? "Aprove o token primeiro"
-                : "Trocar"}
+                ? "Approve token first"
+                : "Swap"}
             </button>
           </>
         )}
 
-        {approveError && <p className="text-xs text-red-400">Erro na aprovação: {approveError.message}</p>}
-        {swapError && <p className="text-xs text-red-400">Erro no swap: {swapError.message}</p>}
+        {approveError && <p className="text-xs text-red-400">Approval error: {approveError.message}</p>}
+        {swapError && <p className="text-xs text-red-400">Swap error: {swapError.message}</p>}
         {isSwapSuccess && swapHash && (
-          <p className="break-all text-xs text-emerald-400">Swap confirmado! Hash: {swapHash}</p>
+          <p className="break-all text-xs text-emerald-400">Swap confirmed! Hash: {swapHash}</p>
         )}
       </div>
 
@@ -328,7 +328,7 @@ function SlippageControl({
       </button>
       {open && (
         <div className="absolute right-0 z-10 mt-2 w-48 rounded-xl border border-white/10 bg-zinc-800 p-3 shadow-xl">
-          <p className="mb-2 text-xs text-white/50">Tolerância de slippage</p>
+          <p className="mb-2 text-xs text-white/50">Slippage tolerance</p>
           <div className="flex gap-1">
             {[0.1, 0.5, 1].map((preset) => (
               <button

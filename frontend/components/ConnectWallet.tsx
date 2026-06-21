@@ -24,12 +24,12 @@ export function ConnectWallet() {
           disabled={isConnecting || !injectedConnector}
           className="rounded-xl bg-emerald-500 px-4 py-2 text-sm font-semibold text-black transition hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {isConnecting ? "Conectando..." : "Conectar carteira"}
+          {isConnecting ? "Connecting..." : "Connect wallet"}
         </button>
         {connectError && (
           <p className="max-w-[220px] text-right text-xs text-red-400">
             {connectError.message.includes("not detected") || !injectedConnector
-              ? "Nenhuma carteira (MetaMask, etc.) detectada no navegador."
+              ? "No wallet (MetaMask, etc.) detected in the browser."
               : connectError.message}
           </p>
         )}
@@ -44,7 +44,7 @@ export function ConnectWallet() {
         disabled={isSwitching}
         className="rounded-xl bg-amber-500 px-4 py-2 text-sm font-semibold text-black transition hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {isSwitching ? "Trocando..." : "Trocar para OPN Testnet"}
+        {isSwitching ? "Switching..." : "Switch to OPN Testnet"}
       </button>
     );
   }
@@ -58,7 +58,7 @@ export function ConnectWallet() {
         onClick={() => disconnect()}
         className="rounded-xl border border-white/15 px-3 py-2 text-sm text-white/70 transition hover:border-white/30 hover:text-white"
       >
-        Sair
+        Disconnect
       </button>
     </div>
   );
