@@ -1,0 +1,20 @@
+{
+  "name": "opn-mini-swap-contracts",
+  "version": "1.0.0",
+  "description": "Contratos do Mini Swap para a OPN Chain (IOPn) - Factory, Router, WOPN e Token de teste",
+  "private": true,
+  "scripts": {
+    "compile": "hardhat compile",
+    "deploy:testnet": "hardhat run scripts/deploy.js --network opnTestnet",
+    "deploy:local": "hardhat run scripts/deploy.js --network localhost",
+    "node": "hardhat node"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "hardhat": "^2.22.5",
+    "solc": "^0.8.20"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
+}

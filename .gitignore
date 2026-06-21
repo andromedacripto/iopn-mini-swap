@@ -1,0 +1,15 @@
+node_modules/
+.env
+.env.local
+.DS_Store
+
+# contratos
+contracts/cache/
+contracts/artifacts/
+contracts/typechain-types/
+contracts/deployed/*.json
+
+# frontend
+frontend/.next/
+frontend/out/
+frontend/*.tsbuildinfo
