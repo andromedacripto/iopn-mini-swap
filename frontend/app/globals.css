@@ -13,6 +13,20 @@
 }
 
 body {
-  background: var(--background);
   color: var(--foreground);
+}
+
+/* Hand cursor on every clickable element, even when not explicitly
+   styled with cursor-pointer in JSX (buttons, links, selects, and
+   anything with role="button" or an onClick handler via tabindex). */
+button:not(:disabled),
+a,
+select,
+[role="button"],
+[onclick] {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
 }

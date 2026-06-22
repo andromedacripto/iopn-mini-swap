@@ -4,16 +4,16 @@ import { FaucetButton } from "@/components/FaucetButton";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center bg-gradient-to-b from-zinc-950 via-zinc-950 to-black px-4 py-10">
-      <div className="flex w-full max-w-md items-center justify-between pb-8">
+    <main className="flex min-h-screen flex-col items-center px-4 py-10">
+      <div className="flex w-full max-w-md items-center justify-between rounded-xl bg-black/50 px-4 py-3 pb-3 shadow-lg backdrop-blur-sm">
         <div>
-          <h1 className="text-xl font-bold text-white">OPN Mini Swap</h1>
-          <p className="text-xs text-white/40">DEX demo on the OPN Chain Testnet</p>
+          <h1 className="text-xl font-bold text-white drop-shadow-md">IOPNX Swap</h1>
+          <p className="text-xs font-medium text-white/80">Swap on the OPN Chain Testnet</p>
         </div>
         <ConnectWallet />
       </div>
 
-      <div className="flex w-full max-w-md flex-col gap-4">
+      <div className="mt-8 flex w-full max-w-md flex-col gap-4">
         <FaucetButton />
         <SwapCard />
       </div>
@@ -28,11 +28,11 @@ function FaucetLink() {
     href: "https://faucet.iopn.tech",
     target: "_blank",
     rel: "noopener noreferrer",
-    className: "underline hover:text-white/60",
+    className: "font-semibold text-white underline hover:text-emerald-400",
   };
   return (
-    <footer className="mt-10 max-w-md text-center text-[11px] text-white/30">
-      Demo / testnet project. Tokens have no real value. OPN Testnet (chainId 984).{" "}
+    <footer className="mt-10 max-w-md rounded-xl bg-black/50 px-4 py-3 text-center text-sm font-medium text-white shadow-lg backdrop-blur-sm">
+      Testnet IOPNX Swap. Tokens have no real value. OPN Testnet (chainId 984).{" "}
       <a {...linkProps}>Get test OPN from the faucet</a>
     </footer>
   );
